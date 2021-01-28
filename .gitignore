@@ -131,4 +131,5 @@ dmypy.json
 # PyCharm
 .idea
 
-.DS_Str
+.DS_Store
+posters

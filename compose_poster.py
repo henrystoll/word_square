@@ -12,7 +12,8 @@ class Background:
     size: tuple
 
 
-poster_file = "barnacle_20_DIN_A3_300"
+# poster_file = "barnacle_20_DIN_A3_300_ocean"
+poster_file = "adventure_20_DIN_A3_300_bonfire"
 
 backgrounds = [
     Background("01", (537, 699), (1115, 1590)),
@@ -23,9 +24,10 @@ backgrounds = [
 
 ]
 
-for selected in backgrounds:
-    # selected = choice(backgrounds)
-    # selected = backgrounds[4]
+# for selected in backgrounds:
+for _ in range(3):
+    selected = choice(backgrounds)
+
     # Create an Image Object from an Image
     bg = Image.open(f"backgrounds/{selected.file}.jpg")
     img = Image.open(f"posters/{poster_file}.png")

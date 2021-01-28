@@ -1,6 +1,6 @@
 import string
 from random import randint, randrange, choice, seed
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance
 
 COL = 'col'
 ROW = 'row'
@@ -93,9 +93,13 @@ paper = 'DIN_A3'
 resolution = 300
 margin_height_percent = 10
 
-# words = ["starlink", "falcon", "rocket", "satellite", "dish", "internet", "fast", "elon", "stars"]
-words = ["barnacle", "barracuda", "blowfish", "algae", "coral", "flounder", "herring", "nautilus", "ocean", "octopus",
-         "orca", "otter", "oyster", "shrimp", "seaweed", "shipwreck", "shark", "waves", "urchin", "turle"]
+
+text_file = "camping"
+# text_file = "ocean"
+
+with open(f"texts/{text_file}.txt") as file:
+    words = file.read().splitlines()
+
 
 word_grid = gen_word_grid(size, words)
 
@@ -123,15 +127,20 @@ variant = 'en-1'
 # variant = 'long'
 
 # Setup colors
-WHITE = (255, 255, 255)
-DARK_GREY = (50, 50, 50)
-BLACK = (0, 0, 0)
+TRANSPARENT = (0, 0, 0, 0)
+WHITE = (255, 255, 255, 255)
+DARK_WHITE = (255, 255, 255, 180)
+# DARK_WHITE = (230, 230, 230, 200)
+LIGHT_GREY = (200, 200, 200, 255)
+DARK_GREY = (50, 50, 50, 255)
+BLACK = (0, 0, 0, 255)
 
-bg_color = WHITE
-text_color = DARK_GREY
+bg_color = TRANSPARENT
+text_color = DARK_WHITE
+# text_color = DARK_GREY
 
 # Create Image
-img = Image.new('RGB', image_size, color=bg_color)
+img = Image.new('RGBA', image_size, color=bg_color)
 width, height = img.size
 
 draw = ImageDraw.Draw(img)
@@ -202,7 +211,19 @@ for index, text in enumerate(split_words):
     draw.multiline_text((margin + index * width_column, current_y), text, font=font, fill=text_color,
                         spacing=font_size * spacing_factor)
 
+# bg_file = "ocean"
+# bg_file = "camping"
+bg_file = "bg-" + text_file
+bg = Image.open(f"backgrounds/{bg_file}.jpg")
+bg = bg.resize(image_size)
+
+bg = ImageEnhance.Brightness(bg).enhance(0.7)
+bg = ImageEnhance.Contrast(bg).enhance(0.7)
+
+bg.paste(img, (0, 0), img)
+bg.show()
 # img.show()
 
 # Save image
-img.save(f"posters/{words[0]}_{size}_{paper}_{resolution}.png")
+# img.save(f"posters/{words[0]}_{size}_{paper}_{resolution}.png")
+bg.save(f"posters/{text_file}_{size}_{paper}_{resolution}_{bg_file}.png")
