@@ -8,12 +8,12 @@ from PIL import Image
 @dataclass
 class Background:
     file: str
-    offset: tuple
+    offset: tupl e
     size: tuple
 
 
-# poster_file = "barnacle_20_DIN_A3_300_ocean"
-poster_file = "adventure_20_DIN_A3_300_bonfire"
+# poster_file = "ocean_20_DIN_A3_300_bg-ocean"
+poster_file = "camping_20_DIN_A3_300_bg-camping"
 
 backgrounds = [
     Background("01", (537, 699), (1115, 1590)),
@@ -24,9 +24,9 @@ backgrounds = [
 
 ]
 
-# for selected in backgrounds:
-for _ in range(3):
-    selected = choice(backgrounds)
+for selected in backgrounds:
+# for _ in range(4):
+#     selected = choice(backgrounds)
 
     # Create an Image Object from an Image
     bg = Image.open(f"backgrounds/{selected.file}.jpg")
