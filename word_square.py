@@ -5,6 +5,7 @@ from random import randint, randrange, choice
 
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageColor
 from pydantic.dataclasses import dataclass
+from typing import List
 
 EMPTY = '.'
 
@@ -39,7 +40,7 @@ def print_line(size):
     print()
 
 
-def generate_word_grid(size: int, words: list[str]):
+def generate_word_grid(size: int, words: List[str]):
     grid = [gen_row(size) for _ in range(size)]
 
     for word in words:
@@ -106,7 +107,7 @@ def get_color(color: str) -> tuple:
         return ImageColor.getrgb(color)
 
 
-def generate_poster(words: list[str],
+def generate_poster(words: List[str],
                     background=None,
                     grid_size=20,
                     no_columns=4,
@@ -116,8 +117,8 @@ def generate_poster(words: list[str],
                     variant='en-1',
                     bg_color_str="#000",
                     text_color_str="custom(DARK_WHITE)",
-                    font_header_path='/Library/Fonts/Didot.ttc',
-                    font_mono_path='/Library/Fonts/Menlo.ttc'
+                    font_header_path='/fonts/Didot.ttc',
+                    font_mono_path='/fonts/Menlo.ttc'
                     ) -> Image:
     word_grid = generate_word_grid(grid_size, words)
 

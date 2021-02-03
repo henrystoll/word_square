@@ -1,3 +1,4 @@
-fastapi
-uvicorn
-pillow
+fastapi~=0.63.0
+pillow~=8.1.0
+pydantic~=1.7.3
+starlette~=0.13.6

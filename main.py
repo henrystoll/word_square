@@ -1,6 +1,6 @@
 from io import BytesIO
 from os import walk
-from typing import Optional
+from typing import Optional, List
 
 import fastapi
 import uvicorn
@@ -11,7 +11,7 @@ from word_square import generate_poster
 
 
 class Poster(BaseModel):
-    words: list[str] = [
+    words: List[str] = [
         "adventure",
         "backpack",
         "bonfire",
@@ -44,10 +44,10 @@ class Poster(BaseModel):
     text_color_str: Optional[str] = "custom(DARK_WHITE)"
 
 
-api = fastapi.FastAPI()
+app = fastapi.FastAPI()
 
 
-@api.get('/backgrounds')
+@app.get('/backgrounds')
 def list_backgrounds():
     path = './backgrounds'
     _, _, filenames = next(walk(path))
@@ -55,7 +55,7 @@ def list_backgrounds():
     return filenames
 
 
-@api.post('/image')
+@app.post('/image')
 async def generate_image(settings: Poster):
     img = generate_poster(settings.words)
     buffer = BytesIO()
@@ -66,4 +66,4 @@ async def generate_image(settings: Poster):
                              )
 
 
-uvicorn.run(api)
+uvicorn.run(app)
